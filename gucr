@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+function git_cleaning()
+{
+    git fetch --prune
+    git branch -D `git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs`
+}
+
+function origin_avail()
+{
+    git remote show origin >/dev/null 2>&1
+    CODE=$?
+    # code 128 means origin does not exist in the repo.
+    if [ "$CODE" = "128" ]; then
+      return 1
+    fi
+    return 0
+}
+
+new_branch=$1
+base_branch=${2:-development}
+if [ "x$new_branch" = "x" ]; then
+  echo "$(basename $0) [new] [base:$base_branch]"
+  echo "     new:  Name of branch to create."
+  echo "     base: Name of branch to base/create from."
+  exit 0
+fi
+
+set -e
+
+if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
+git checkout $base_branch -b $new_branch

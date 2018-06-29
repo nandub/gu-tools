@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+function git_cleaning()
+{
+    git fetch --prune
+    git branch -D `git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs`
+}
+
+function origin_avail()
+{
+    git remote show origin >/dev/null 2>&1
+    CODE=$?
+    # code 128 means origin does not exist in the repo.
+    if [ "$CODE" = "128" ]; then
+      return 1
+    fi
+    return 0
+}
+
+# Check to see if the branch is on remote origin
+# if not then allow to rebase current branch otherwise merge.
+function rebase_it()
+{
+  if ! origin_avail; then return 0; fi
+  git remote show origin | grep $1 >/dev/null 2>&1
+  CODE=$?
+  # code 1 means could not find branch on origin.
+  if [ "$CODE" = "1" ]; then
+    return 0
+  fi
+  return 1
+}
+
+current_branch=$1
+base_branch=${2:-development}
+if [ "x$current_branch" = "x" ]; then
+  echo "$(basename $0) [current:.] [base:$base_branch]"
+  echo "     current: Name of branch to merge into."
+  echo "     base:    Name of branch to base/merge from."
+  exit 0
+fi
+if [ "$current_branch" = "." ]; then
+  current_branch=$(git branch | grep "*" | sed 's/* //')
+fi
+
+set -e
+
+if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
+git checkout $current_branch
+if rebase_it $current_branch; then 
+  git rebase -i $base_branch
+else
+  git merge $base_branch
+fi
