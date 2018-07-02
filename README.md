@@ -25,6 +25,10 @@ Why? because I can and I like to share what I have learned with git.
     PREFIX=$HOME/bin ./install.sh
     ./install.sh #defaults to /usr/local/bin
 
+    Or
+
+    curl -s https://install-gu-tools.now.sh | sh -s -- --prefix=PREFIX=$HOME --version=v0.0.3
+
 ## Usage
 
 `gprune` command
