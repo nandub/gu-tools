@@ -1,0 +1,21 @@
+{
+  "name": "install-gu-tools",
+  "version": "0.0.1",
+  "description": "Gu-Tools one-liner install shell script",
+  "scripts": {
+    "start": "micro server.js"
+  },
+  "author": "Fernando Ortiz <nandub@nandub.info>",
+  "license": "MIT",
+  "dependencies": {
+    "micro": "^9.0.2"
+  },
+  "now": {
+    "type": "npm",
+    "alias": "install-gu-tools.now.sh",
+    "files": [
+      "server.js",
+      "install.sh"
+    ]
+  }
+}
