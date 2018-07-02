@@ -15,13 +15,15 @@ Why? because I can and I like to share what I have learned with git.
     git clone https://github.com/nandub/gu-tools.git
     cd gu-tools
 
+    if you have make and m4 do:
+
     make PREFIX=$HOME install
+    make install #defaults to /usr/local/bin
 
     Or
 
-    make install #defaults to /usr/local/bin
-
-    Or install on location reachable from $PATH.
+    PREFIX=$HOME/bin ./install.sh
+    ./install.sh #defaults to /usr/local/bin
 
 ## Usage
 

@@ -6,8 +6,8 @@ usage() {
   printf '%s\n' \
       'gprune v@VERSION@' \
       '' \
-      'gprune prune / delete remote branches and ' \
-      'prune / delete local branches no longer on remote.' \
+      'gprune prune and delete remote branches and ' \
+      'prune and delete local branches no longer on remote.' \
       '' \
       'Usage: gprune [-h] [branch]' \
       '' \
