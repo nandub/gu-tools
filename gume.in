@@ -4,7 +4,7 @@ m4_include(gu_tools.inc.sh)
 
 usage() {
   printf '%s\n' \
-      'gume v@VERSION@' \
+      'gume @VERSION@' \
       '' \
       'gume merge or rebase a branch based from ' \
       ' a specified branch or from default development branch.' \

@@ -4,7 +4,7 @@ m4_include(gu_tools.inc.sh)
 
 usage() {
   printf '%s\n' \
-      'gucl v@VERSION@' \
+      'gucl @VERSION@' \
       '' \
       'gucl deletes and recreate a branch based from ' \
       'a specified branch or from default development branch.' \

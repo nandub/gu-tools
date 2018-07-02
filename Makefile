@@ -1,5 +1,5 @@
 PACKAGE=gu-tools
-VER=0.0.2
+VER=v0.0.2
 
 PREFIX=/usr/local
 

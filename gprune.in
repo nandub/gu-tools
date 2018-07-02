@@ -4,7 +4,7 @@ m4_include(gu_tools.inc.sh)
 
 usage() {
   printf '%s\n' \
-      'gprune v@VERSION@' \
+      'gprune @VERSION@' \
       '' \
       'gprune prune and delete remote branches and ' \
       'prune and delete local branches no longer on remote.' \

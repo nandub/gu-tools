@@ -4,7 +4,7 @@ m4_include(gu_tools.inc.sh)
 
 usage() {
   printf '%s\n' \
-      'gucr v@VERSION@' \
+      'gucr @VERSION@' \
       '' \
       'gucr creates new branches based from a specified branch or ' \
       'from default development branch.' \
