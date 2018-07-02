@@ -15,11 +15,11 @@ Why? because I can and I like to share what I have learned with git.
     git clone https://github.com/nandub/gu-tools.git
     cd gu-tools
 
-    PREFIX=$HOME/bin ./install.sh
+    make PREFIX=$HOME install
 
     Or
 
-    ./install.sh #defaults to /usr/local/bin
+    make install #defaults to /usr/local/bin
 
     Or install on location reachable from $PATH.
 
@@ -28,32 +28,57 @@ Why? because I can and I like to share what I have learned with git.
 `gprune` command
 
 ```sh
-gprune #calling it by itself, will fetch and prune deleted branches from origin.
-gprune <branch-name> #calling it like this, will delete the specified branch from origin then will fetch and prune and deletes the local branch.
+gprune v0.0.1
+
+gprune prune / delete remote branches and
+prune / delete local branches no longer on remote.
+
+Usage: gprune [-h] [branch]
+
+    -h         Show this usage
+    branch     Name of branch to delete.
 ```
 
 `gucr` command
 
 ```sh
-gucr [new] [base:development]
-     new:  Name of branch to create.
-     base: Name of branch to base/create from.
+gucr v0.0.1
+
+gucr creates new branches based from a specified branch or
+from default development branch.
+
+Usage: gucr [new] [base:development]
+
+    new:     Name of branch to create.
+    base:    Name of branch to base/create from.
 ```
 
 `gume` command
 
 ```sh
-gume [current:.] [base:development]
-     current: Name of branch to merge into.
-     base:    Name of branch to base/merge from.
+gume v0.0.1
+
+gume merge or rebase a branch based from
+ a specified branch or from default development branch.
+
+Usage: gume [current:.] [base:development]
+
+    current:   Name of branch to merge into.
+    base:      Name of branch to base/merge from.
 ```
 
-`gucl` command WARNING: This command will destroy the selected branch a replace with a new copy from origin.
+`gucl` command WARNING: This command will destroy the selected branch a replace with a new copy based from development (default).
 
 ```sh
-gucl [clean] [base:development]
-     clean: Name of branch to clean.
-     base: Name of branch to base from.
+gucl v0.0.1
+
+gucl deletes and recreate a branch based from
+a specified branch or from default development branch.
+
+Usage: gucl [clean] [base:development]
+
+    clean:   Name of branch to clean.
+    base:    Name of branch to base/create from.
 ```
 
 ## TODO

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+m4_include(gu_tools.inc.sh)
+
+usage() {
+  printf '%s\n' \
+      'gume v@VERSION@' \
+      '' \
+      'gume merge or rebase a branch based from ' \
+      ' a specified branch or from default development branch.' \
+      '' \
+      'Usage: gume [current:.] [base:development]' \
+      '' \
+      '    current:   Name of branch to merge into.' \
+      '    base:      Name of branch to base/merge from.'
+}
+
+current_branch=$1
+base_branch=${2:-development}
+if [ "x$current_branch" = "x" ]; then
+  usage
+  exit 0
+fi
+if [ "$current_branch" = "." ]; then
+  current_branch=$(git branch | grep "*" | sed 's/* //')
+fi
+
+set -e
+
+if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
+git checkout $current_branch
+if rebase_it $current_branch; then
+  git rebase -i $base_branch
+else
+  git merge $base_branch
+fi
+
+# vim: set et ts=2 sw=2:

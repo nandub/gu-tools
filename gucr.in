@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+m4_include(gu_tools.inc.sh)
+
+usage() {
+  printf '%s\n' \
+      'gucr v@VERSION@' \
+      '' \
+      'gucr creates new branches based from a specified branch or ' \
+      'from default development branch.' \
+      '' \
+      'Usage: gucr [new] [base:development]' \
+      '' \
+      '    new:     Name of branch to create.' \
+      '    base:    Name of branch to base/create from.'
+}
+
+new_branch=$1
+base_branch=${2:-development}
+if [ "x$new_branch" = "x" ]; then
+  usage
+  exit 0
+fi
+
+set -e
+
+if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
+git checkout $base_branch -b $new_branch
+
+# vim: set et ts=2 sw=2:

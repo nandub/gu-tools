@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+m4_include(gu_tools.inc.sh)
+
+usage() {
+  printf '%s\n' \
+      'gucl v@VERSION@' \
+      '' \
+      'gucl deletes and recreate a branch based from ' \
+      'a specified branch or from default development branch.' \
+      '' \
+      'Usage: gucl [clean] [base:development]' \
+      '' \
+      '    clean:   Name of branch to clean.' \
+      '    base:    Name of branch to base/create from.'
+}
+
+clean_branch=$1
+base_branch=${2:-development}
+if [ "x$clean_branch" = "x" ]; then
+  usage
+  exit 0
+fi
+
+set -e
+
+current_branch=$(git branch | grep "*" | sed 's/* //')
+git branch -D $clean_branch
+if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
+git checkout $base_branch -b $clean_branch
+git checkout $current_branch
+
+# vim: set et ts=2 sw=2:
