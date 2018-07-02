@@ -43,7 +43,7 @@ fetch() {
   local command
   if hash curl 2>/dev/null; then
     set +e
-    command="curl --silent --fail $1"
+    command="curl --silent --fail -L $1"
     curl --silent --fail -L "$1"
     rc=$?
     set -e
@@ -71,7 +71,9 @@ resolve_tools_version() {
   if [ "${tag}" = "latest" ]; then
     tag=v$(fetch https://raw.githubusercontent.com/nandub/gu-tools/master/VERSION)
   fi
-  echo $tag
+  #whether they pass a v or not for version.
+  newtag=$(echo $tag | sed 's/v//')
+  echo v$newtag
 }
 
 # Currently known to support:
