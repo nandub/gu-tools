@@ -30,14 +30,11 @@ function origin_avail() {
 
 # Check to see if the branch is on remote origin
 # if not then allow to rebase current branch otherwise merge.
-function rebase_it() {
+function branch_avail_on_origin() {
   local branch=$1
-  if ! origin_avail; then return 0; fi
-  git remote show origin | grep $branch >/dev/null 2>&1
+  if ! origin_avail; then return 1; fi
+  git remote show origin | grep -w $branch >/dev/null 2>&1
   CODE=$?
-  # code 1 means could not find branch on origin.
-  if [ "$CODE" = "1" ]; then
-    return 0
-  fi
-  return 1
+  # code 0 means found branch on origin.
+  return $CODE
 }
