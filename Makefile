@@ -1,5 +1,5 @@
 PACKAGE=gu-tools
-VER=v0.0.3
+VER=v0.0.4
 
 PREFIX=/usr/local
 
@@ -7,7 +7,7 @@ BINPROGS = \
 	gprune \
 	gucl \
 	gucr \
-	gume \
+	gume 
 
 V_GEN = $(_v_GEN_$(V))
 _v_GEN_ = $(_v_GEN_0)
@@ -33,4 +33,4 @@ clean:
 dist:
 	git archive --format=tar --prefix=$(PACKAGE)-$(VER)/ $(VER) | gzip -9 >$(PACKAGE)-$(VER).tar.gz
 
-.PHONY: clean
+.PHONY: clean install
