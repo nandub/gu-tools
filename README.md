@@ -34,15 +34,31 @@ Why? because I can and I like to share what I have learned with git.
 `gprune` command
 
 ```sh
-gprune v0.0.1
+gprune v0.0.5
 
-gprune prune / delete remote branches and
-prune / delete local branches no longer on remote.
+gprune prune and delete remote branches and
+prune and delete local branches no longer on remote.
 
-Usage: gprune [-h] [branch]
+Usage: gprune [-h] [-r remote] [-b branch]
 
     -h         Show this usage
-    branch     Name of branch to delete.
+    -r remote  Name of the remote to delete or prune from.
+    -b branch  Name of branch to delete or prune.
+```
+
+`gpush` command
+
+```sh
+gpush v0.0.5
+
+gpush push branch to a remote branch.
+
+Usage: gpush [-h] [-f] [-r remote] [-b branch]
+
+    -h         Show this usage
+    -f         Force pushing to remote.
+    -r remote  Name of the remote to push into.
+    -b branch  Name of branch to push.
 ```
 
 `gucr` command
