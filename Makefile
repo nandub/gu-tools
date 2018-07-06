@@ -1,5 +1,5 @@
 PACKAGE=gu-tools
-VER=v0.0.4
+VER=v0.0.5
 
 PREFIX=/usr/local
 
@@ -8,7 +8,7 @@ BINPROGS = \
   gpush \
 	gucl \
 	gucr \
-	gume 
+	gume
 
 V_GEN = $(_v_GEN_$(V))
 _v_GEN_ = $(_v_GEN_0)
