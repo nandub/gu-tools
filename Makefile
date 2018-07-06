@@ -5,6 +5,7 @@ PREFIX=/usr/local
 
 BINPROGS = \
 	gprune \
+  gpush \
 	gucl \
 	gucr \
 	gume 

@@ -18,8 +18,9 @@ function git_cleaning() {
   git branch -D $(git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs)
 }
 
-function origin_avail() {
-  git remote show origin >/dev/null 2>&1
+function remote_avail() {
+  local remote=$1
+  git remote show $remote >/dev/null 2>&1
   CODE=$?
   # code 128 means origin does not exist in the repo.
   if [ "$CODE" = "128" ]; then
@@ -28,12 +29,17 @@ function origin_avail() {
   return 0
 }
 
+function origin_avail() {
+  if remote_avail origin; then return 0; else return 1; fi
+}
+
 # Check to see if the branch is on remote origin
 # if not then allow to rebase current branch otherwise merge.
-function branch_avail_on_origin() {
-  local branch=$1
+function branch_avail_on_remote() {
+  local remote=$1
+  local branch=$2
   if ! origin_avail; then return 1; fi
-  git remote show origin | grep -w $branch >/dev/null 2>&1
+  git remote show $remote | grep -w $branch >/dev/null 2>&1
   CODE=$?
   # code 0 means found branch on origin.
   return $CODE

@@ -1,5 +1,6 @@
 *.tar.gz
 gu-tools-*
+gpush
 gprune
 gucl
 gucr
