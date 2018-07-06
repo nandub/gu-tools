@@ -222,7 +222,8 @@ cd gu-tools-$dir
 
 data_include=$(cat gu_tools.inc.sh | tr '\n' '^' | sed 's/\//SLASH/g' | sed 's/\&/AMP/g')
 mkdir -p bin
-for f in gprune.in gucl.in gucr.in gume.in
+files=$(ls -1 *.in)
+for f in $files
 do
   name=$(echo $f | awk -F'.' '{print $1}')
   sed 's/m4_include(gu_tools.inc.sh)/\^/g' $f | sed "s/@VERSION@/${RESOLVED}/g" | sed "s/\^/$data_include/g" > bin/cmd.new
