@@ -15,6 +15,6 @@ if asksure; then
   sed -i.bak "s/VER=v.*/VER=${NEWVER}/" Makefile
   rm *.bak
   git status
-  git commit -a -m "bump to version ${VER}"
+  git commit -am "bump to version ${VER}"
   git tag -a ${NEWVER} -m "Version ${VER}"
 fi
