@@ -22,12 +22,13 @@ Why? because I can and I like to share what I have learned with git.
 
     Or
 
-    PREFIX=$HOME/bin ./install.sh
+    ./install.sh --prefix=PREFIX=$HOME
     ./install.sh #defaults to /usr/local/bin
 
     Or
 
-    curl -s https://install-gu-tools.now.sh | sh -s -- --prefix=PREFIX=$HOME --version=v0.0.3
+    curl -sL install-gu-tools.now.sh/v0.0.5 | sh #defaults to /usr/local/bin
+    curl -s https://install-gu-tools.now.sh | sh -s --  --prefix=PREFIX=$HOME
 
 ## Usage
 

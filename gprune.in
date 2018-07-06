@@ -26,7 +26,7 @@ fi
 # parse argv variables
 while [ "$#" -gt 0 ]; do
   case "$1" in
-    -h|--help) HELP="$"; shift 1;;
+    -h|--help) HELP="$1"; shift 1;;
     -r|--remote) REMOTE="$2"; shift 2;;
     -b|--branch) BRANCH="$2"; shift 2;;
     -f|-y|--force|--yes) FORCE=1; shift 1;;

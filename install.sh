@@ -1,14 +1,14 @@
 #!/bin/sh
 # Script is based from https://github.com/zeit/install-node.now.sh
 #
-# Semver also works (ex: v0.0.1):
+# Semver also works (ex: v0.0.4):
 #
-#   $ curl -sL install-gu-tools.now.sh/v0.0.1 | sh
+#   $ curl -sL install-gu-tools.now.sh/v0.0.4 | sh
 #
 # Options may be passed to the shell script with `-s --`:
 #
-#   $ curl -sL install-gu-tools.now.sh | sh -s -- --prefix=$HOME --version=8 --verbose
-#   $ curl -sL install-gu-tools.now.sh | sh -s -- -P $HOME -v 8 -V
+#   $ curl -sL install-gu-tools.now.sh | sh -s -- --prefix=$HOME --version=v0.0.4 --verbose
+#   $ curl -sL install-gu-tools.now.sh | sh -s -- -P $HOME -v v0.0.4 -V
 #
 set -euo pipefail
 
