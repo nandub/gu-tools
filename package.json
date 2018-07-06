@@ -13,6 +13,7 @@
   "now": {
     "type": "npm",
     "alias": "install-gu-tools.now.sh",
+    "public": true,
     "files": [
       "server.js",
       "install.sh"
