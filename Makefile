@@ -1,5 +1,5 @@
 PACKAGE=gu-tools
-VER=v0.0.6
+VER=0.0.6
 
 PREFIX=/usr/local
 
@@ -14,7 +14,7 @@ V_GEN = $(_v_GEN_$(V))
 _v_GEN_ = $(_v_GEN_0)
 _v_GEN_0 = @echo "  GEN     " $@;
 
-edit = $(V_GEN) m4 -P $@.in | sed 's/@VERSION@/$(VER)/g' >$@ && chmod go-w,+x $@
+edit = $(V_GEN) m4 -P $@.in | sed 's/@VERSION@/v$(VER)/g' >$@ && chmod go-w,+x $@
 
 all: $(BINPROGS)
 

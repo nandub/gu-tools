@@ -12,7 +12,7 @@ NEWVER=v${VER}
 read -r -p "Releasing $NEWVER... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
 if asksure; then
   echo ${VER} > VERSION
-  sed -i.bak "s/VER=v.*/VER=${NEWVER}/" Makefile
+  sed -i.bak "s/VER=.*/VER=${VER}/" Makefile
   rm *.bak
   git status
   git commit -am "bump to version ${VER}"
