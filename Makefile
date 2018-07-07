@@ -1,5 +1,5 @@
 PACKAGE=gu-tools
-VER=0.0.6
+VER=$(shell cat VERSION)
 
 PREFIX=/usr/local
 
@@ -32,6 +32,6 @@ clean:
 	$(RM) $(BINPROGS)
 
 dist:
-	git archive --format=tar --prefix=$(PACKAGE)-$(VER)/ $(VER) | gzip -9 >$(PACKAGE)-$(VER).tar.gz
+	git archive --format=tar --prefix=$(PACKAGE)-$(VER)/ v$(VER) | gzip -9 >$(PACKAGE)-$(VER).tar.gz
 
 .PHONY: clean install
