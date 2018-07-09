@@ -29,7 +29,7 @@ set -e
 
 if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
 git checkout $current_branch
-if branch_avail_on_origin $current_branch; then
+if branch_avail_on_remote $current_branch; then
   git merge $base_branch
 else
   git rebase -i $base_branch
