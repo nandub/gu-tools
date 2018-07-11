@@ -35,73 +35,79 @@ Why? because I can and I like to share what I have learned with git.
 `gprune` command
 
 ```sh
-gprune v0.0.5
+gprune v0.1.0
 
 gprune prune and delete remote branches and
 prune and delete local branches no longer on remote.
 
-Usage: gprune [-h] [-r remote] [-b branch]
+Usage: gprune [-h] [[-b] branch] [-r remote]
 
-    -h         Show this usage
-    -r remote  Name of the remote to delete or prune from.
-    -b branch  Name of branch to delete or prune.
+    -h        Show this usage.
+    branch: Name of branch to delete or prune.
+    remote: Name of the remote to delete or prune from.
 ```
 
 `gpush` command
 
 ```sh
-gpush v0.0.5
+gpush v0.1.0
 
 gpush push branch to a remote branch.
 
-Usage: gpush [-h] [-f] [-r remote] [-b branch]
+Usage: gpush [-h] [-f] [[-b] branch] [-r remote]
 
-    -h         Show this usage
-    -f         Force pushing to remote.
-    -r remote  Name of the remote to push into.
-    -b branch  Name of branch to push.
-```
-
-`gucr` command
-
-```sh
-gucr v0.0.1
-
-gucr creates new branches based from a specified branch or
-from default development branch.
-
-Usage: gucr [new] [base:development]
-
-    new:     Name of branch to create.
-    base:    Name of branch to base/create from.
-```
-
-`gume` command
-
-```sh
-gume v0.0.1
-
-gume merge or rebase a branch based from
- a specified branch or from default development branch.
-
-Usage: gume [current:.] [base:development]
-
-    current:   Name of branch to merge into.
-    base:      Name of branch to base/merge from.
+    -h      Show this usage.
+    -f      Force pushing to remote.
+    branch: Name of the branch to push.
+    remote: Name of the remote to push into.
 ```
 
 `gucl` command WARNING: This command will destroy the selected branch a replace with a new copy based from development (default).
 
 ```sh
-gucl v0.0.1
+gucl v0.1.0
 
 gucl deletes and recreate a branch based from
 a specified branch or from default development branch.
 
-Usage: gucl [clean] [base:development]
+Usage: gucl [-h] [[-R] recreate] [-r remote] [-b branch]
 
-    clean:   Name of branch to clean.
-    base:    Name of branch to base/create from.
+    -h        Show this usage.
+    recreate: Name of the branch to delete and recreate.
+    remote:   Name of the remote to base/create from.
+    branch:   Name of the branch to base/create from.
+```
+
+`gucr` command
+
+```sh
+gucr v0.1.0
+
+gucr creates new branches based from a specified branch or
+from default development branch.
+
+Usage: gucr [-h] [[-C] create] [-r remote] [-b branch]
+
+    -h      Show this usage.
+    create: Name of the branch to create.
+    remote: Name of the remote to base/create from.
+    branch: Name of the branch to base/create from.
+```
+
+`gume` command
+
+```sh
+gume v0.1.0
+
+gume merge or rebase a branch based from
+ a specified branch or from default development branch.
+
+Usage: gume [-h] [[-M] merge,.] [-r remote] [-b branch]
+
+    -h      Show this usage.
+    merge:  Name of the branch to merge into.
+    remote: Name of the remote to merge from.
+    branch: Name of the branch to base/merge from.
 ```
 
 ## TODO
