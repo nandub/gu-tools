@@ -9,30 +9,72 @@ usage() {
       'gume merge or rebase a branch based from ' \
       ' a specified branch or from default development branch.' \
       '' \
-      'Usage: gume [current:.] [base:development]' \
+      'Usage: gume [-h] [[-M] merge,.] [-r remote] [-b branch]' \
       '' \
-      '    current:   Name of branch to merge into.' \
-      '    base:      Name of branch to base/merge from.'
+      '    -h        Show this usage.' \
+      '    merge:  Name of the branch to merge into.' \
+      '    remote: Name of the remote to merge from.' \
+      '    branch: Name of the branch to base/merge from.'
 }
 
-current_branch=$1
-base_branch=${2:-development}
-if [ "x$current_branch" = "x" ]; then
+# defaults
+if [ -z "${REMOTE-}" ]; then
+  REMOTE=origin
+fi
+
+if [ -z "${BRANCH-}" ]; then
+  BRANCH=development
+fi
+
+# process flags
+pointer=1
+while [[ $pointer -le $# ]]; do
+   if [[ ${!pointer} != "-"* ]]; then ((pointer++)) # not a parameter flag so advance pointer
+   else
+      param=${!pointer}
+      ((pointer_plus = pointer + 1))
+      slice_len=1
+
+      case $param in
+         # paramter-flags with arguments
+         -R|--create) CREATE=${!pointer_plus}; ((slice_len++));;
+         -r|--remote) REMOTE=${!pointer_plus}; ((slice_len++));;
+         -b|--branch) BRANCH=${!pointer_plus}; ((slice_len++));;
+
+         # binary flags
+         -h|--help) HELP=true;;
+      esac
+
+      # splice out pointer frame from positional list
+      [[ $pointer -gt 1 ]] \
+         && set -- ${@:1:((pointer - 1))} ${@:((pointer + $slice_len)):$#} \
+         || set -- ${@:((pointer + $slice_len)):$#};
+   fi
+done
+
+if [ ! -z "${HELP-}" ]; then
   usage
   exit 0
 fi
-if [ "$current_branch" = "." ]; then
-  current_branch=$(git branch | grep "*" | sed 's/* //')
+
+if [ -z "${MERGE-}" ]; then
+  MERGE=$1
 fi
 
 set -e
 
-if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
-git checkout $current_branch
-if branch_avail_on_remote origin $current_branch; then
-  git merge $base_branch
-else
-  git rebase -i $base_branch
+if [ "${MERGE}" = "." ]; then
+  MERGE=$(git branch | grep "*" | sed 's/* //')
+fi
+
+if branch_avail_on_remote $REMOTE $BRANCH; then
+  git_cleaning && git checkout $BRANCH && git pull
+  git checkout $MERGE
+  if branch_avail_on_remote $REMOTE $MERGE; then
+    git merge $BRANCH
+  else
+    git rebase -i $BRANCH
+  fi
 fi
 
 # vim: set et ts=2 sw=2:

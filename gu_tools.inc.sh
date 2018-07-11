@@ -14,8 +14,8 @@ function asksure() {
 }
 
 function git_cleaning() {
-  git fetch --prune
-  git branch -D $(git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs)
+  git fetch --prune > /dev/null 2>&1
+  git branch -D $(git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs) > /dev/null 2>&1
 }
 
 function remote_avail() {

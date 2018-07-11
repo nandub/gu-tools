@@ -8,12 +8,12 @@ usage() {
       '' \
       'gpush push branch to a remote branch.' \
       '' \
-      'Usage: gpush [-h] [-f] [-r remote] [-b branch]' \
+      'Usage: gpush [-h] [-f] [[-b] branch] [-r remote]' \
       '' \
-      '    -h         Show this usage' \
-      '    -f         Force pushing to remote.' \
-      '    -r remote  Name of the remote to push into.' \
-      '    -b branch  Name of branch to push.'
+      '    -h     Show this usage.' \
+      '    -f     Force pushing to remote.' \
+      '    branch: Name of the branch to push.' \
+      '    remote: Name of the remote to push into.'
 }
 
 set -e
@@ -23,24 +23,30 @@ if [ -z "${REMOTE-}" ]; then
   REMOTE=origin
 fi
 
-if [ -z "${BRANCH-}" ]; then
-  BRANCH=development
-fi
+# process flags
+pointer=1
+while [[ $pointer -le $# ]]; do
+   if [[ ${!pointer} != "-"* ]]; then ((pointer++)) # not a parameter flag so advance pointer
+   else
+      param=${!pointer}
+      ((pointer_plus = pointer + 1))
+      slice_len=1
 
-# parse argv variables
-while [ "$#" -gt 0 ]; do
-  case "$1" in
-    -h|--help) HELP="$1"; shift 1;;
-    -r|--remote) REMOTE="$2"; shift 2;;
-    -b|--branch) BRANCH="$2"; shift 2;;
-    -f|-y|--force|--yes) FORCE=1; shift 1;;
-    -r=*|--remote=*) REMOTE="${1#*=}"; shift 1;;
-    -b=*|--branch=*) BRANCH="${1#*=}"; shift 1;;
-    -f=*|-y=*|--force=*|--yes=*) FORCE="${1#*=}"; shift 1;;
+      case $param in
+         # paramter-flags with arguments
+         -r|--remote) REMOTE=${!pointer_plus}; ((slice_len++));;
+         -b|--branch) BRANCH=${!pointer_plus}; ((slice_len++));;
 
-    -*) error "Unknown option: $1"; exit 1;;
-    *) HELP="$1"; shift 1;;
-  esac
+         # binary flags
+         -h|--help) HELP=true;;
+         -f|--force) FORCE=true;;
+      esac
+
+      # splice out pointer frame from positional list
+      [[ $pointer -gt 1 ]] \
+         && set -- ${@:1:((pointer - 1))} ${@:((pointer + $slice_len)):$#} \
+         || set -- ${@:((pointer + $slice_len)):$#};
+   fi
 done
 
 if [ ! -z "${HELP-}" ]; then
@@ -48,16 +54,26 @@ if [ ! -z "${HELP-}" ]; then
   exit 0
 fi
 
+if [ -z "${BRANCH-}" ]; then
+  BRANCH=$1
+fi
+if [ -z "${BRANCH-}" ]; then
+  BRANCH=development
+fi
+
 if remote_avail $REMOTE; then
   read -r -p "You are pushing \"$BRANCH\" branch into the remote \"$REMOTE/$BRANCH\" branch... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
   echo
   if asksure; then
+    git_cleaning && git checkout $BRANCH && git pull
     if [ ! -z "${FORCE-}" ]; then
       git push -u -f $REMOTE $BRANCH
     else
       git push -u $REMOTE $BRANCH
     fi
   fi
+else
+  echo The $REMOTE is not available.
 fi
 
 # vim: set et ts=2 sw=2:

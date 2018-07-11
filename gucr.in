@@ -9,22 +9,63 @@ usage() {
       'gucr creates new branches based from a specified branch or ' \
       'from default development branch.' \
       '' \
-      'Usage: gucr [new] [base:development]' \
+      'Usage: gucr [-h] [[-C] create] [-r remote] [-b branch]' \
       '' \
-      '    new:     Name of branch to create.' \
-      '    base:    Name of branch to base/create from.'
+      '    -h      Show this usage.' \
+      '    create: Name of the branch to create.' \
+      '    remote: Name of the remote to base/create from.' \
+      '    branch: Name of the branch to base/create from.'
 }
 
-new_branch=$1
-base_branch=${2:-development}
-if [ "x$new_branch" = "x" ]; then
+# defaults
+if [ -z "${REMOTE-}" ]; then
+  REMOTE=origin
+fi
+
+if [ -z "${BRANCH-}" ]; then
+  BRANCH=development
+fi
+
+# process flags
+pointer=1
+while [[ $pointer -le $# ]]; do
+   if [[ ${!pointer} != "-"* ]]; then ((pointer++)) # not a parameter flag so advance pointer
+   else
+      param=${!pointer}
+      ((pointer_plus = pointer + 1))
+      slice_len=1
+
+      case $param in
+         # paramter-flags with arguments
+         -R|--create) CREATE=${!pointer_plus}; ((slice_len++));;
+         -r|--remote) REMOTE=${!pointer_plus}; ((slice_len++));;
+         -b|--branch) BRANCH=${!pointer_plus}; ((slice_len++));;
+
+         # binary flags
+         -h|--help) HELP=true;;
+      esac
+
+      # splice out pointer frame from positional list
+      [[ $pointer -gt 1 ]] \
+         && set -- ${@:1:((pointer - 1))} ${@:((pointer + $slice_len)):$#} \
+         || set -- ${@:((pointer + $slice_len)):$#};
+   fi
+done
+
+if [ ! -z "${HELP-}" ]; then
   usage
   exit 0
 fi
 
+if [ -z "${CREATE-}" ]; then
+  CREATE=$1
+fi
+
 set -e
 
-if origin_avail; then git_cleaning && git checkout $base_branch && git pull; fi
-git checkout $base_branch -b $new_branch
+if remote_avail $REMOTE; then
+    git_cleaning && git checkout $BRANCH && git pull
+    git checkout $BRANCH -b $CREATE
+fi
 
 # vim: set et ts=2 sw=2:
