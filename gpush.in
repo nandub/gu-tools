@@ -10,8 +10,8 @@ usage() {
       '' \
       'Usage: gpush [-h] [-f] [[-b] branch] [-r remote]' \
       '' \
-      '    -h     Show this usage.' \
-      '    -f     Force pushing to remote.' \
+      '    -h      Show this usage.' \
+      '    -f      Force pushing to remote.' \
       '    branch: Name of the branch to push.' \
       '    remote: Name of the remote to push into.'
 }

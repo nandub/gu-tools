@@ -11,7 +11,7 @@ usage() {
       '' \
       'Usage: gume [-h] [[-M] merge,.] [-r remote] [-b branch]' \
       '' \
-      '    -h        Show this usage.' \
+      '    -h      Show this usage.' \
       '    merge:  Name of the branch to merge into.' \
       '    remote: Name of the remote to merge from.' \
       '    branch: Name of the branch to base/merge from.'
