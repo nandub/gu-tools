@@ -57,10 +57,6 @@ if [ -z "${BRANCH-}" ]; then
   BRANCH=$1
 fi
 
-if [ -z "${BRANCH-}" ]; then
-  BRANCH=$(git branch | grep "*" | sed 's/* //')
-fi
-
 git fetch --prune
 current_branch=$(git branch | grep "*" | sed 's/* //')
 if [ "$current_branch" = "${BRANCH}" ]; then
