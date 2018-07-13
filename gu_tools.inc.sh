@@ -39,8 +39,10 @@ function branch_avail_on_remote() {
   local remote=$1
   local branch=$2
   if ! origin_avail; then return 1; fi
-  git remote show $remote | grep -w $branch >/dev/null 2>&1
+  echo REMOTE/BRANCH: "$remote/$branch"
+  git branch -vv | grep -w "$remote/$branch" | grep -v gone >/dev/null 2>&1
+  #git remote show $remote | grep -w $branch >/dev/null 2>&1
   CODE=$?
-  # code 0 means found branch on origin.
+  # code 0 means found branch on remote.
   return $CODE
 }
