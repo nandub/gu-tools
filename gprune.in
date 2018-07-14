@@ -80,7 +80,7 @@ if [ "${BRANCH-}" != "" ]; then
     git branch -D $BRANCH
   fi
 else
-  git branch -D $(git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs)
+  git branch -D $(git branch -vv | grep -v "*" | grep ': gone] ' | awk '{print $1}' | xargs)
 fi
 
 # vim: set et ts=2 sw=2:
