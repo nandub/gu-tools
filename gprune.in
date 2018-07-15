@@ -57,6 +57,11 @@ if [ -z "${BRANCH-}" ]; then
   BRANCH=$1
 fi
 
+# If the current selected branch was deleted from remote lets force deletion.
+if [ -z "${BRANCH-}" ]; then
+  BRANCH=$(git b -vv | grep "*" | grep ': gone] ' | awk '{print $2}' | sed 's/* //')
+fi
+
 git fetch --prune
 current_branch=$(git branch | grep "*" | sed 's/* //')
 if [ "$current_branch" = "${BRANCH}" ]; then
@@ -68,19 +73,21 @@ if [ "$current_branch" = "${BRANCH}" ]; then
   fi
 fi
 
-if [ "${BRANCH-}" != "" ]; then
-  if branch_avail_on_remote $REMOTE $BRANCH; then
-    read -r -p "You are deleting a local \"$BRANCH\" branch and the remote \"$REMOTE/$BRANCH\" branch... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
-    echo
-    if asksure; then
-      git push $REMOTE --delete $BRANCH
-      git branch -D $BRANCH
-    fi
-  else
+if branch_avail_on_remote $REMOTE $BRANCH; then
+  read -r -p "You are deleting a local \"$BRANCH\" branch and the remote \"$REMOTE/$BRANCH\" branch... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
+  if asksure; then
+    git push $REMOTE --delete $BRANCH
     git branch -D $BRANCH
   fi
-else
-  git branch -D $(git branch -vv | grep -v "*" | grep ': gone] ' | awk '{print $1}' | xargs)
 fi
+
+# This part delete local branches, so there is no popups to confirm.
+toDelete=$(git branch -vv | grep '*' | grep ': gone] ' | awk '{print $2}' )
+if [ "$toDelete" != "" ]; then
+  git checkout master
+  git branch -D $toDelete
+fi
+
+git branch -D $(git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs)
 
 # vim: set et ts=2 sw=2:

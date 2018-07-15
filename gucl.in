@@ -74,7 +74,6 @@ if [ "$current_branch" = "${RECREATE}" ]; then
 fi
 if remote_avail $REMOTE; then
   read -r -p "You are about delete \"$RECREATE\" branch and create a new branch based from \"$REMOTE/$BRANCH\" branch... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
-  echo
   if asksure; then
     git_cleaning && git checkout $BRANCH && git pull
     git branch -D $RECREATE

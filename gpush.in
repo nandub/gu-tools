@@ -62,15 +62,10 @@ if [ -z "${BRANCH-}" ]; then
 fi
 
 if remote_avail $REMOTE; then
-  read -r -p "You are pushing \"$BRANCH\" branch into the remote \"$REMOTE/$BRANCH\" branch... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
-  echo
-  if asksure; then
-    git_cleaning && git checkout $BRANCH && git pull
-    if [ ! -z "${FORCE-}" ]; then
-      git push -u -f $REMOTE $BRANCH
-    else
-      git push -u $REMOTE $BRANCH
-    fi
+  if [ ! -z "${FORCE-}" ]; then
+    git push -u -f $REMOTE $BRANCH
+  else
+    git push -u $REMOTE $BRANCH
   fi
 else
   echo The $REMOTE is not available.
