@@ -92,6 +92,8 @@ if [ "$toDelete" != "" ]; then
   git branch -D $toDelete
 fi
 
-git branch -D $(git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs)
+git branch -D $(git branch -vv | grep ': gone] ' | awk '{print $1}' | xargs) > /dev/null 2>&1
+
+echo Done.
 
 # vim: set et ts=2 sw=2:
