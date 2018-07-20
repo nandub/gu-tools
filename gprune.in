@@ -79,6 +79,10 @@ if branch_avail_on_remote $REMOTE $BRANCH; then
     git push $REMOTE --delete $BRANCH
     git branch -D $BRANCH
   fi
+else
+  if git rev-parse --verify $BRANCH > /dev/null 2>&1; then
+    git branch -D $BRANCH
+  fi
 fi
 
 # This part delete local branches, so there is no popups to confirm.
