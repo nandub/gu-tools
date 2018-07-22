@@ -3,6 +3,10 @@
 . ./gu_tools.inc.sh
 
 cmd=$1
+if [ "x$cmd" = "xpush" ]; then
+  git push --tags
+  exit 0
+fi
 if [ "x$cmd" = "x" ]; then
   cmd=patch
 fi
