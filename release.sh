@@ -4,7 +4,7 @@
 
 cmd=$1
 if [ "x$cmd" = "xpush" ]; then
-  git push --tags
+  git push origin master --tags
   exit 0
 fi
 if [ "x$cmd" = "x" ]; then
