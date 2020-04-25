@@ -7,7 +7,7 @@ usage() {
       'gucr @VERSION@' \
       '' \
       'gucr creates new branches based from a specified branch or ' \
-      'from default development branch.' \
+      'from default ${BASED_BRANCH} branch.' \
       '' \
       'Usage: gucr [-h] [[-C] create] [-r remote] [-b branch]' \
       '' \
@@ -23,7 +23,7 @@ if [ -z "${REMOTE-}" ]; then
 fi
 
 if [ -z "${BRANCH-}" ]; then
-  BRANCH=development
+  BRANCH=${BASED_BRANCH}
 fi
 
 # process flags
@@ -63,9 +63,9 @@ fi
 
 set -e
 
-if remote_avail $REMOTE; then
-    git_cleaning && git checkout $BRANCH && git pull
-    git checkout $BRANCH -b $CREATE
+if remote_avail ${REMOTE}; then
+    git_cleaning && git checkout ${BRANCH} && git pull
+    git checkout ${BRANCH} -b ${CREATE}
 fi
 
 # vim: set et ts=2 sw=2:

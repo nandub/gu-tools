@@ -45,3 +45,7 @@ function branch_avail_on_remote() {
   # code 0 means found branch on remote.
   return $CODE
 }
+
+if [ -z "${BASED_BRANCH-}" ]; then
+  export BASED_BRANCH=development
+fi

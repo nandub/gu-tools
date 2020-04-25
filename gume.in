@@ -7,7 +7,7 @@ usage() {
       'gume @VERSION@' \
       '' \
       'gume merge or rebase a branch based from ' \
-      ' a specified branch or from default development branch.' \
+      ' a specified branch or from default ${BASED_BRANCH} branch.' \
       '' \
       'Usage: gume [-h] [[-M] merge,.] [-r remote] [-b branch]' \
       '' \
@@ -23,7 +23,7 @@ if [ -z "${REMOTE-}" ]; then
 fi
 
 if [ -z "${BRANCH-}" ]; then
-  BRANCH=development
+  BRANCH=${BASED_BRANCH}
 fi
 
 # process flags
@@ -67,13 +67,13 @@ if [ "${MERGE}" = "." ]; then
   MERGE=$(git branch | grep "*" | sed 's/* //')
 fi
 
-if branch_avail_on_remote $REMOTE $BRANCH; then
-  git_cleaning && git checkout $BRANCH && git pull
-  git checkout $MERGE
-  if branch_avail_on_remote $REMOTE $MERGE; then
-    git merge $BRANCH
+if branch_avail_on_remote ${REMOTE} ${BRANCH}; then
+  git_cleaning && git checkout ${BRANCH} && git pull
+  git checkout ${MERGE}
+  if branch_avail_on_remote ${REMOTE} ${MERGE}; then
+    git merge ${BRANCH}
   else
-    git rebase -i $BRANCH
+    git rebase -i ${BRANCH}
   fi
 fi
 

@@ -58,17 +58,17 @@ if [ -z "${BRANCH-}" ]; then
   BRANCH=$1
 fi
 if [ -z "${BRANCH-}" ]; then
-  BRANCH=development
+  BRANCH=${BASED_BRANCH}
 fi
 
-if remote_avail $REMOTE; then
+if remote_avail ${REMOTE}; then
   if [ ! -z "${FORCE-}" ]; then
-    git push -u -f $REMOTE $BRANCH
+    git push -u -f ${REMOTE} ${BRANCH}
   else
-    git push -u $REMOTE $BRANCH
+    git push -u ${REMOTE} ${BRANCH}
   fi
 else
-  echo The $REMOTE is not available.
+  echo The ${REMOTE} is not available.
 fi
 
 # vim: set et ts=2 sw=2:

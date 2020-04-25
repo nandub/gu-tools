@@ -66,22 +66,22 @@ git fetch --prune
 current_branch=$(git branch | grep "*" | sed 's/* //')
 if [ "$current_branch" = "${BRANCH}" ]; then
   echo Switching to a different branch
-  if branch_avail_on_remote $REMOTE $BRANCH; then
-    git checkout development
+  if branch_avail_on_remote ${REMOTE} ${BRANCH}; then
+    git checkout ${BASED_BRANCH}
   else
     git checkout master
   fi
 fi
 
-if branch_avail_on_remote $REMOTE $BRANCH; then
-  read -r -p "You are deleting a local \"$BRANCH\" branch and the remote \"$REMOTE/$BRANCH\" branch... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
+if branch_avail_on_remote ${REMOTE} ${BRANCH}; then
+  read -r -p "You are deleting a local \"${BRANCH}\" branch and the remote \"${REMOTE}/${BRANCH}\" branch... Press CTRL-c to cancel or Enter to continue.." -n 1 dummy
   if asksure; then
-    git push $REMOTE --delete $BRANCH
-    git branch -D $BRANCH
+    git push ${REMOTE} --delete ${BRANCH}
+    git branch -D ${BRANCH}
   fi
 else
-  if git rev-parse --verify $BRANCH > /dev/null 2>&1; then
-    git branch -D $BRANCH
+  if git rev-parse --verify ${BRANCH} > /dev/null 2>&1; then
+    git branch -D ${BRANCH}
   fi
 fi
 
