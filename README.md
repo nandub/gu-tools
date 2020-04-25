@@ -27,8 +27,8 @@ Why? because I can and I like to share what I have learned with git.
 
     Or
 
-    curl -sL https://install-gu-tools.now.sh/v0.0.5 | sh #defaults to /usr/local/bin
-    curl -sL https://install-gu-tools.now.sh | sh -s --  --prefix=$HOME
+    curl -sL https://install-gu-tools-nandub.nandub-gh.now.sh/v0.0.5 | sh #defaults to /usr/local/bin
+    curl -sL https://install-gu-tools-nandub.nandub-gh.now.sh | sh -s --  --prefix=$HOME
 
 ## Usage
 

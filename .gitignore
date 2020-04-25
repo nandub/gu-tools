@@ -6,3 +6,4 @@ gucl
 gucr
 gume
 bin/*
+node_modules

@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
   const { pathname } = parse(req.url);
   const version = pathname.substr(1);
   if (version) {
-    return installScript.replace('VERSION=latest', `VERSION=${version}`);
+    res.end(installScript.replace('VERSION=latest', `VERSION=${version}`));
   } else {
-    return installScript;
+    res.end(installScript);
   }
 };

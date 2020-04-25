@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "name": "install-gu-tools",
+    "alias": "install-gu-tools.now.sh",
+    "public": true,
+    "builds": [
+        { "src": "*.js", "use": "@now/node" }
+    ]
+}
